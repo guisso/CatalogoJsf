@@ -1,0 +1,41 @@
+/* 
+    Created on : Mar 25, 2021, 11:03:03 AM
+    Author     : Luis Guisso <luis.guisso at ifnmg.edu.br>
+*/
+
+h1 {
+    border-bottom: solid thin blue;
+}
+
+h1, h2 {
+    margin: .15em;
+}
+
+div#leiaute {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+div#produtos, div#ingredientes {
+    width: 12em;
+    max-height: 15em;
+    margin: .25em 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.produtoListBox {
+    height: 5.5rem;
+}
+
+.valores {
+    color: white;
+    background-color: rgb(30,144,250);
+    margin-top: .5em;
+    padding: .5em;
+}
+
+.valores td:nth-child(1) {
+    text-align: right;
+}

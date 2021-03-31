@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+    lang="pt-BR"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <h:outputStylesheet name="styles.css" />
+        <title>Catálogo de Pizzas</title>
+    </h:head>
+
+    <h:body>
+        <h1>Catálogo de Pizzas</h1>
+
+        <h:form>
+            
+            <div id="leiaute">
+
+                <div id="produtos">
+                    <h2>Produtos</h2>
+
+                    <h:selectOneListbox
+                        id="produtoList"
+                        styleClass="produtoListBox"
+                        label="Produto"
+                        value="#{catalogoControllerBean
+                                 .produtoSelecionado}">
+
+                        <f:ajax 
+                            event="change" 
+                            render="custo preco lucro ingredienteList"
+                            listener="#{catalogoControllerBean.onProdutoSelecionadoAjax()}"/>
+
+                        <f:selectItems
+                            value="#{catalogoControllerBean
+                                     .produtos}"
+                            var="produto"
+                            itemLabel="#{produto.nome}"
+                            itemValue="#{produto}" />
+                        
+                    </h:selectOneListbox>
+
+                    <h:panelGrid
+                        styleClass="valores"
+                        columns="2">
+                        
+                        Custo:
+                        <h:outputText
+                            id="custo"
+                            value="${catalogoControllerBean.produtoSelecionado.custo}">
+                            <f:convertNumber pattern="R$ 0.00" />
+                        </h:outputText>
+
+                        Preço: 
+                        <h:outputText
+                            id="preco"
+                            value="${catalogoControllerBean.produtoSelecionado.preco}">
+                            <f:convertNumber pattern="R$ 0.00" />
+                        </h:outputText>
+
+                        Lucro: 
+                        <h:outputText
+                            id="lucro"
+                            value="${catalogoControllerBean.produtoSelecionado.lucro}">
+                            <f:convertNumber 
+                                type="percent" />
+                        </h:outputText>
+                    </h:panelGrid>
+
+                </div>
+                <!-- FIM produtos -->
+
+                <div id="ingredientes">
+                    <h2>Ingredientes</h2>
+
+                    <h:selectManyCheckbox
+                        id="ingredienteList"
+                        label="Ingredientes"
+                        layout="pageDirection"
+                        value="#{catalogoControllerBean.produtoSelecionado.ingredientes}"
+                        onchange="submit()"
+                        valueChangeListener="#{catalogoControllerBean.onIngredientesSelecionados()}">
+
+                        <f:selectItems
+                            value="#{catalogoControllerBean.ingredientes}"
+                            var="ingrediente"
+                            itemLabel="#{ingrediente.nome}"
+                            itemValue="#{ingrediente}" />
+                        
+                    </h:selectManyCheckbox>
+                </div>
+                <!-- FIM ingredientes -->
+
+            </div>
+            <!-- FIM leiaute -->
+
+        </h:form>
+
+        <ui:debug hotkey="k" />
+    </h:body>
+</html>
+
